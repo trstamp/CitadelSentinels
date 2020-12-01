@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey;
+using CodeMonkey.Utils;
 
 public class Tower : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class Tower : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            CMDebug.TextPopupMouse("Click!");
+            //CMDebug.TextPopupMouse("Click!");
+            Arrow.Create(projectileShootFromPosition,UtilsClass.GetMouseWorldPosition());
         }
     }
 }

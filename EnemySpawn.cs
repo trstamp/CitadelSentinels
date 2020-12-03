@@ -9,28 +9,38 @@ public class EnemySpawn : MonoBehaviour
 
     private void Awake()
     {
-        grid = new Grid(20, 20, 1.5f, new Vector3(-12.8f, -6f));
+        grid = new Grid(0, 0, 1.5f, new Vector3(-12.8f, -6f));
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetMouseButtonDown(0))
         {
-
+            SpawnSpikeyWave();
+            grid.SetValue(Utilities.GetMouseWorldPosition(), 1);
         }
     }
 
-    private void SpawnEnemyWave()
+    private void SpawnSpikeyWave()
     {
         float spawnTime = 0f;
         float timePerSpawn = .8f;
 
-        //FunctionTimer.Create(() => SpawnEnemyWave())
+        SpawnEnemy(Enemy.EnemyType.spikey);
+        SpawnEnemy(Enemy.EnemyType.spikey);
+        SpawnEnemy(Enemy.EnemyType.spikey);
+        SpawnEnemy(Enemy.EnemyType.spikey);
+
+        FunctionTimer.Create(() => SpawnEnemy(Enemy.EnemyType.spikey), spawnTime); spawnTime += timePerSpawn;
+        FunctionTimer.Create(() => SpawnEnemy(Enemy.EnemyType.spikey), spawnTime); spawnTime += timePerSpawn;
+        FunctionTimer.Create(() => SpawnEnemy(Enemy.EnemyType.spikey), spawnTime); spawnTime += timePerSpawn;
+        FunctionTimer.Create(() => SpawnEnemy(Enemy.EnemyType.spikey), spawnTime); spawnTime += timePerSpawn;
     }
 
-    /*private void spawnEnemy(Enemy.EnemyType enemyType)
+    private void SpawnEnemy(Enemy.EnemyType enemyType)
     {
-
-    }*/
+        Vector3 spawnPosition = new Vector3(-9, 7);
+        Enemy.Create(spawnPosition, enemyType);
+    }
 }

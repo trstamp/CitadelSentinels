@@ -18,4 +18,5 @@ public class GameAssets : MonoBehaviour
     }
 
     public Transform pfArrow;
+    public Enemy spikey;
 }

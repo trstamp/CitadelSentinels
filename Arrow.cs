@@ -5,23 +5,26 @@ using CodeMonkey.Utils;
 
 public class Arrow : MonoBehaviour
 {
-    public static void Create(Vector3 spawnPosition, Vector3 targetPosition)
+    public static void Create(Vector3 spawnPosition, Enemy enemy, int damage)
     {
         Transform arrowTransform = Instantiate(GameAssets.i.pfArrow, spawnPosition, Quaternion.identity);
 
         Arrow arrow = arrowTransform.GetComponent<Arrow>();
-        arrow.Setup(targetPosition);
+        arrow.Setup(enemy, damage);
     }
 
-    private Vector3 targetPosition;
+    private Enemy enemy;
+    private int damage;
 
-    private void Setup(Vector3 targetPosition)
+    private void Setup(Enemy enemy, int damage)
     {
-        this.targetPosition = targetPosition;
+        this.enemy = enemy;
+        this.damage = damage;
     }
 
     private void Update()
     {
+        Vector3 targetPosition = enemy.GetPosition();
         Vector3 moveDir = (targetPosition - transform.position).normalized;
         
         float moveSpeed = 15f;
@@ -34,7 +37,9 @@ public class Arrow : MonoBehaviour
         float destroySelfDistance = 0.1f;
         if(Vector3.Distance(transform.position, targetPosition) < destroySelfDistance)
         {
+            enemy.Damage(damage);
             Destroy(gameObject);
+            Enemy.enemyList.Remove(enemy);
         }
     }
 }
